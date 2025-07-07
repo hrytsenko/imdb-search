@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:8080
+
+### Search by title
+GET {{baseUrl}}/movies?query=thing
+
+### Search by genre
+GET {{baseUrl}}/movies?query=Horror&scope=genre
+
+### Search by actor
+GET {{baseUrl}}/movies?query=Jack%20Nicholson&scope=cast
+
+### Search by writer
+GET {{baseUrl}}/movies?query=Stephen%20King&scope=writer

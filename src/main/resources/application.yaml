@@ -1,0 +1,16 @@
+quarkus:
+  application:
+    name: imdb-search
+  otel:
+    metrics:
+      enabled: true
+    logs:
+      enabled: true
+  log:
+    console:
+      format: '%d{HH:mm:ss} %-5p traceId=%X{traceId}, spanId=%X{spanId} [%c{2.}] (%t) %s%e%n'
+  container-image:
+    builder: jib
+    group: hrytsenko
+    name: imdb-search
+    tag: latest

@@ -1,0 +1,15 @@
+app:
+  search:
+    limit: 10
+  dataset:
+    location: 'dataset/imdb.csv'
+
+quarkus:
+  otel:
+    simple: true
+    exporter:
+      otlp:
+        endpoint: 'http://localhost:4317'
+    metric:
+      export:
+        interval: 1s

@@ -1,0 +1,4 @@
+quarkus:
+  otel:
+    sdk:
+      disabled: true

@@ -1,0 +1,18 @@
+services:
+  imdb-search:
+    image: hrytsenko/imdb-search:latest
+    volumes:
+      - ./config/application.yaml:/home/jboss/config/application.yaml:ro
+      - ./dataset/imdb.csv:/home/jboss/dataset/imdb.csv:ro
+    environment:
+      - QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT=http://lgtm:4317
+    ports:
+      - '8080:8080'
+    depends_on:
+      - lgtm
+  lgtm:
+    image: grafana/otel-lgtm:latest
+    ports:
+      - '3000:3000'
+      - '4317:4317'
+      - '4318:4318'
