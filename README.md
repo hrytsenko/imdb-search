@@ -1,4 +1,4 @@
-# imdb-search-example
+# imdb-search
 
 Search movies in IMDB Top 250.
 
@@ -25,3 +25,4 @@ Tools:
 * [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 * [Quarkus CLI](https://quarkus.io/guides/cli-tooling)
 * [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+* [Grafana LGTM](https://grafana.com/docs/opentelemetry/docker-lgtm/)
