@@ -13,6 +13,7 @@ Features:
 * REST services with [Quarkus REST](https://quarkus.io/guides/rest)
 * API specifications with [Swagger UI](https://quarkus.io/guides/openapi-swaggerui)
 * Bean validation with [Hibernate Validator](https://quarkus.io/guides/validation)
+* Exception mapping with [Quarkus REST](https://quarkus.io/guides/rest)
 * Dependency injection with [Quarkus ArC](https://quarkus.io/guides/cdi-reference)
 * External configuration with [Config YAML](https://quarkus.io/guides/config-yaml)
 * Telemetry aggregation with [OpenTelemetry](https://quarkus.io/guides/opentelemetry)
