@@ -1,9 +1,6 @@
 package imdb;
 
-import io.opentelemetry.api.metrics.LongCounter;
-import io.opentelemetry.api.metrics.Meter;
-import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.ApplicationScoped;
+import io.micrometer.core.annotation.Counted;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -38,15 +35,13 @@ class MovieResource {
   int searchLimit;
 
   @Inject
-  MetricProvider metricProvider;
-
-  @Inject
   MovieIndex movieIndex;
 
   @Operation(
       summary = "Search movies",
       description = "Search movies by title, genre, cast or writer"
   )
+  @Counted(value = "movie_search")
   @GET
   public MovieList getMovies(
       @Parameter(
@@ -77,8 +72,6 @@ class MovieResource {
       @Pattern(regexp = "^(title|genre|cast|writer)$",
           message = "Scope must be one of: title, genre, cast or writer")
       String searchScope) {
-    metricProvider.searchCounter().add(1);
-
     List<Movie> movies = movieIndex.searchMovies(searchText, searchScope, searchLimit);
     return MovieList.of(movies);
   }
@@ -87,27 +80,6 @@ class MovieResource {
     static MovieList of(List<Movie> movies) {
       return new MovieList(movies.size(), movies);
     }
-  }
-
-  @Slf4j
-  @ApplicationScoped
-  static class MetricProvider {
-
-    @Inject
-    Meter meter;
-
-    LongCounter searchCounter;
-
-    @PostConstruct
-    void init() {
-      log.info("Registering metrics");
-      searchCounter = meter.counterBuilder("search").build();
-    }
-
-    LongCounter searchCounter() {
-      return searchCounter;
-    }
-
   }
 
   @Slf4j
