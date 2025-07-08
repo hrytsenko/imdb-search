@@ -12,5 +12,5 @@ quarkus:
   container-image:
     builder: jib
     group: hrytsenko
-    name: imdb-search
+    name: ${quarkus.application.name}
     tag: latest
