@@ -27,12 +27,12 @@ public class TestMoviesProfile implements QuarkusTestProfile {
     return Stream.of(SHINING, THING);
   }
 
-  static Movie thingMovie() {
-    return THING;
-  }
-
   static Movie shiningMovie() {
     return SHINING;
+  }
+
+  static Movie thingMovie() {
+    return THING;
   }
 
   @Override
