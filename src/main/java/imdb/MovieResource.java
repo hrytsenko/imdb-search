@@ -27,7 +27,6 @@ import java.util.List;
     )
 )
 @Path("movies")
-@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 class MovieResource {
 
