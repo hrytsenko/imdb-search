@@ -11,3 +11,6 @@ GET {{baseUrl}}/movies?query=Jack%20Nicholson&scope=cast
 
 ### Search by writer
 GET {{baseUrl}}/movies?query=Stephen%20King&scope=writer
+
+### Check health
+GET {{baseUrl}}/q/health

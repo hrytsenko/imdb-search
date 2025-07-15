@@ -33,12 +33,14 @@ class MovieIndex {
   @Produces
   @Readiness
   HealthCheck movieIndexHealth() {
-    int indexSize = indexSearcher != null ? indexSearcher.getIndexReader().numDocs() : 0;
-    return () -> HealthCheckResponse.builder()
-        .name("Movie index")
-        .status(indexSearcher != null)
-        .withData("Size", indexSize)
-        .build();
+    return () -> {
+      int indexSize = indexSearcher != null ? indexSearcher.getIndexReader().numDocs() : 0;
+      return HealthCheckResponse.builder()
+          .name("Movie index")
+          .status(indexSearcher != null)
+          .withData("Size", indexSize)
+          .build();
+    };
   }
 
   @SneakyThrows
