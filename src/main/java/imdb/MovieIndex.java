@@ -5,10 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.Produces;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -62,6 +59,7 @@ class MovieIndex {
 
   private static Document convertMovieToDocument(Movie movie) {
     Document document = new Document();
+    document.add(new NumericDocValuesField("rank", movie.rank()));
     document.add(new StringField("rank", Integer.toString(movie.rank()), Field.Store.YES));
     document.add(new TextField("title", movie.title(), Field.Store.YES));
     document.add(new StringField("year", Integer.toString(movie.year()), Field.Store.YES));
@@ -92,7 +90,8 @@ class MovieIndex {
       }
     };
 
-    var hits = indexSearcher.search(searchQuery, limit);
+    Sort sort = new Sort(new SortField("rank", SortField.Type.INT));
+    var hits = indexSearcher.search(searchQuery, limit, sort);
     log.info("Found {} movies", hits.totalHits.value);
     return Stream.of(hits.scoreDocs)
         .map(hit -> getDocumentFromIndex(indexSearcher, hit))
