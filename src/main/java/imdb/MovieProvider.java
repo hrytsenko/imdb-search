@@ -10,6 +10,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.context.ManagedExecutor;
 
 import java.io.Reader;
 import java.nio.file.Files;
@@ -27,8 +28,8 @@ class MovieProvider {
   @Inject
   MovieIndex movieIndex;
 
-  void onStart(@Observes StartupEvent event) {
-    indexMovies();
+  void onStart(@Observes StartupEvent event, ManagedExecutor executor) {
+    executor.submit(this::indexMovies);
   }
 
   void indexMovies() {
