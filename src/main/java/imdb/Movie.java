@@ -9,4 +9,5 @@ record Movie(Integer rank,
              List<String> genres,
              List<String> casts,
              List<String> writers) {
+
 }

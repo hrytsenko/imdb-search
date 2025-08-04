@@ -4,11 +4,17 @@ import io.micrometer.core.annotation.Counted;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
@@ -17,8 +23,6 @@ import org.eclipse.microprofile.openapi.annotations.info.Info;
 import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.hibernate.validator.constraints.Length;
-
-import java.util.List;
 
 @OpenAPIDefinition(
     info = @Info(
@@ -76,6 +80,7 @@ class MovieResource {
   }
 
   record MovieList(int total, List<Movie> movies) {
+
     static MovieList of(List<Movie> movies) {
       return new MovieList(movies.size(), movies);
     }
@@ -88,13 +93,15 @@ class MovieResource {
     @Override
     public Response toResponse(Exception exception) {
       log.error("Unhandled exception", exception);
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+      Status status = Status.INTERNAL_SERVER_ERROR;
+      return Response.status(status)
           .type(MediaType.APPLICATION_JSON)
-          .entity(new Problem("Internal error", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()))
+          .entity(new Problem("Internal error", status.getStatusCode()))
           .build();
     }
 
     record Problem(String title, int status) {
+
     }
 
   }

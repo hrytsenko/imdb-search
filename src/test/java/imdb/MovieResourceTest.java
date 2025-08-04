@@ -3,10 +3,9 @@ package imdb;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import io.restassured.RestAssured;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 @QuarkusTest
 @TestProfile(TestMoviesProfile.class)
@@ -20,7 +19,8 @@ class MovieResourceTest {
         .then().statusCode(200)
         .extract().as(MovieResource.MovieList.class);
 
-    MovieResource.MovieList expectedMovies = MovieResource.MovieList.of(List.of(TestMoviesProfile.thingMovie()));
+    MovieResource.MovieList expectedMovies = MovieResource.MovieList.of(
+        List.of(TestMoviesProfile.thingMovie()));
 
     Assertions.assertEquals(expectedMovies, actualMovies);
   }

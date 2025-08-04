@@ -6,7 +6,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
