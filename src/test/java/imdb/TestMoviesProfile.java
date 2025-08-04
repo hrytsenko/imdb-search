@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public class TestMoviesProfile implements QuarkusTestProfile {
+class TestMoviesProfile implements QuarkusTestProfile {
 
   static Movie SHINING = new Movie(61, "The Shining", 1980, "8.4",
       List.of("Drama", "Horror"),
