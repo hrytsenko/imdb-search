@@ -1,18 +1,26 @@
+networks:
+  imdb-search-network:
+
 services:
   imdb-search:
+    container_name: imdb-search
     image: hrytsenko/imdb-search:latest
     volumes:
       - ./config/application.yaml:/home/jboss/config/application.yaml:ro
       - ./dataset/imdb.csv:/home/jboss/dataset/imdb.csv:ro
     environment:
       - QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT=http://lgtm:4317
+    networks:
+      - imdb-search-network
     ports:
       - '8080:8080'
     depends_on:
       - lgtm
   lgtm:
+    container_name: lgtm
     image: grafana/otel-lgtm:latest
+    networks:
+      - imdb-search-network
     ports:
       - '3000:3000'
       - '4317:4317'
-      - '4318:4318'
