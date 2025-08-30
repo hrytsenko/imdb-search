@@ -60,7 +60,7 @@ class MovieResource {
       @NotEmpty(message = "Query is mandatory")
       @Length(min = 4,
           message = "Query must be at least 4 characters long")
-      String searchText,
+      String query,
 
       @Parameter(
           description = "Search scope",
@@ -74,8 +74,8 @@ class MovieResource {
       @DefaultValue("title")
       @Pattern(regexp = "^(title|genre|cast|writer)$",
           message = "Scope must be one of: title, genre, cast or writer")
-      String searchScope) {
-    List<Movie> movies = movieIndex.searchMovies(searchText, searchScope, searchLimit);
+      String scope) {
+    List<Movie> movies = movieIndex.searchMovies(query, scope, searchLimit);
     return MovieList.of(movies);
   }
 

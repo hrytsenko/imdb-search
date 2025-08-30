@@ -82,11 +82,11 @@ class MovieIndex {
 
   @WithSpan("lucene")
   @SneakyThrows
-  List<Movie> searchMovies(String text, String scope, int limit) {
-    log.info("Search '{}' with scope '{}'", text, scope);
+  List<Movie> searchMovies(String query, String scope, int limit) {
+    log.info("Search '{}' with scope '{}'", query, scope);
 
-    String[] words = text.toLowerCase().split("\\s+");
-    var searchQuery = switch (scope) {
+    String[] words = query.toLowerCase().split("\\s+");
+    var indexQuery = switch (scope) {
       case "genre" -> new PhraseQuery(2, "genres", words);
       case "cast" -> new PhraseQuery(2, "casts", words);
       case "writer" -> new PhraseQuery(2, "writers", words);
@@ -95,13 +95,13 @@ class MovieIndex {
         Arrays.stream(words)
             .map(word -> new Term("title", word))
             .map(term -> new FuzzyQuery(term, 1))
-            .forEach(query -> builder.add(query, BooleanClause.Occur.SHOULD));
+            .forEach(clauseQuery -> builder.add(clauseQuery, BooleanClause.Occur.SHOULD));
         yield builder.build();
       }
     };
 
     Sort sort = new Sort(new SortField("rank", SortField.Type.INT));
-    var hits = indexSearcher.search(searchQuery, limit, sort);
+    var hits = indexSearcher.search(indexQuery, limit, sort);
     log.info("Found {} movies", hits.totalHits.value);
     return Stream.of(hits.scoreDocs)
         .map(hit -> getDocumentFromIndex(indexSearcher, hit))
