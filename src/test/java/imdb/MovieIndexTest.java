@@ -6,7 +6,6 @@ import imdb.Profiles.CustomDataset;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import jakarta.inject.Inject;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,8 +20,8 @@ class MovieIndexTest {
 
   @ParameterizedTest
   @MethodSource("testSearchData")
-  void testSearchMovies(String sourceSearchText, String sourceSearchScope, Movie expectedMovie) {
-    List<Movie> actualMovies = movieIndex.searchMovies(sourceSearchText, sourceSearchScope, 1);
+  void searchMovies(String searchText, String searchScope, Movie expectedMovie) {
+    var actualMovies = movieIndex.searchMovies(searchText, searchScope, 1);
     assertEquals(expectedMovie, actualMovies.getFirst());
   }
 

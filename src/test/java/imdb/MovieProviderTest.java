@@ -28,7 +28,7 @@ class MovieProviderTest {
   MovieProvider movieProvider;
 
   @Test
-  void testIndexMovies() {
+  void indexMovies() {
     doReturn(new StringReader(ManualDataset.DATASET))
         .when(movieDataset).getReader();
 

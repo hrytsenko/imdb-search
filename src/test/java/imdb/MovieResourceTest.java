@@ -3,19 +3,20 @@ package imdb;
 import static io.restassured.RestAssured.given;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
+import imdb.Profiles.CustomDataset;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.TestProfile;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
-@TestProfile(Profiles.CustomDataset.class)
+@TestProfile(CustomDataset.class)
 class MovieResourceTest {
 
   @SneakyThrows
   @Test
-  void testSearchMovies() {
-    String actualMovies = given()
+  void searchMovies() {
+    var actualMovies = given()
         .queryParam("query", "thing")
         .when().get("/movies")
         .then().statusCode(200)
