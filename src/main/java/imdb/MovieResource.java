@@ -84,6 +84,7 @@ class MovieResource {
     static MovieList of(List<Movie> movies) {
       return new MovieList(movies.size(), movies);
     }
+
   }
 
   @Slf4j
@@ -93,15 +94,7 @@ class MovieResource {
     @Override
     public Response toResponse(Exception exception) {
       log.error("Unhandled exception", exception);
-      Status status = Status.INTERNAL_SERVER_ERROR;
-      return Response.status(status)
-          .type(MediaType.APPLICATION_JSON)
-          .entity(new Problem("Internal error", status.getStatusCode()))
-          .build();
-    }
-
-    record Problem(String title, int status) {
-
+      return Response.status(Status.INTERNAL_SERVER_ERROR).build();
     }
 
   }
