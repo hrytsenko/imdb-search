@@ -8,7 +8,7 @@ quarkus:
       enabled: true
   log:
     console:
-      format: '%d{HH:mm:ss} %-5p traceId=%X{traceId}, spanId=%X{spanId} [%c{2.}] (%t) %s%e%n'
+      format: '%d{HH:mm:ss} %-5p [%X{traceId}:%X{spanId}] [%c{2.}] (%t) %s%e%n'
   container-image:
     builder: jib
     group: hrytsenko
